@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @package IndoWapBuilder
+ * @version VERSION (see attached file)
+ * @author Achunk JealousMan
+ * @link http://facebook.com/achunks
+ * @copyright 2011 - 2015
+ * @license LICENSE (see attached file)
+ */
+
 //@ini_set('display_errors', false);
 //@error_reporting(7);
 @ini_set('session.use_trans_sid', 0);
@@ -14,11 +23,9 @@ define('ROOTPATH', dirname(dirname(__file__)) . DIRECTORY_SEPARATOR);
 spl_autoload_register('loadcomponents');
 function loadcomponents($name)
 {
-    if (file_exists($file = ROOTPATH . 'iwbx-includes/components/' . $name .
-        '.php'))
+    if (file_exists($file = ROOTPATH . 'iwbx-includes/components/' . $name . '.php'))
         include $file;
-    elseif (file_exists($file = ROOTPATH . 'iwbx-includes/modules/' . $name .
-        '.php'))
+    elseif (file_exists($file = ROOTPATH . 'iwbx-includes/modules/' . $name . '.php'))
         include $file;
 }
 

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @package IndoWapBuilder
+ * @version VERSION (see attached file)
+ * @author Achunk JealousMan
+ * @link http://facebook.com/achunks
+ * @copyright 2011 - 2015
+ * @license LICENSE (see attached file)
+ */
+
 if (!$user->id)
     $user->redirect(urlencode($set['url'] . '/index.php/panel'));
 $st = isset($_SESSION['st']) ? abs(intval($_SESSION['st'])) : false;
@@ -23,8 +32,8 @@ function get_dir($exp_limit, $str = false)
 {
     if (!$str)
     {
-        $str = strtr(strip_tags(trim($_SERVER['PATH_INFO'])), array('\\' => '/',
-                '//' => '/'));
+        $str = strtr(strip_tags(trim($_SERVER['PATH_INFO'])), array('\\' => '/', '//' =>
+                '/'));
     }
     $path = explode('/', $str, $exp_limit);
     $indexes = explode('/', str_replace('\\', '/', @$path[$exp_limit - 1]));
@@ -32,8 +41,8 @@ function get_dir($exp_limit, $str = false)
     foreach ($indexes as $idx)
     {
         $idx = trim($idx);
-        if ($idx != '' || $idx != '.' || $idx != '..' || mb_substr($idx, 0, 1) !=
-            '.' || mb_substr($idx, -1) != '.')
+        if ($idx != '' || $idx != '.' || $idx != '..' || mb_substr($idx, 0, 1) != '.' ||
+            mb_substr($idx, -1) != '.')
             $dirs[] = $idx;
     }
     return implode('/', $dirs);
@@ -54,8 +63,7 @@ switch ($action)
         $dir = mb_substr($dir, -1) == '/' ? mb_substr($dir, 0, -1) : $dir;
         if (!is_dir($site_root . '/' . $dir))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1');
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
             exit();
         }
         $errors = array();
@@ -70,8 +78,7 @@ switch ($action)
             $fname = strtolower($_FILES['berkas']['name']);
             $fsize = $_FILES['berkas']['size'];
             if ($fsize >= 1024 * $set['filesize'])
-                $errors[] = "Ukuran File tidak boleh lebih dari " . $set['filesize'] .
-                    " Kb.";
+                $errors[] = "Ukuran File tidak boleh lebih dari " . $set['filesize'] . " Kb.";
             $ext = Func::getExt($fname);
             $fname = Func::permalink(substr($fname, 0, "-" . (strlen($ext) + 1)));
             $fname = mb_strlen($fname) > 30 ? mb_substr($fname, 0, 30) : $fname;
@@ -84,8 +91,8 @@ switch ($action)
             {
                 if (move_uploaded_file($ffile, $site_root . '/' . $dir . '/' . $filename))
                 {
-                    header('Location: ' . $baseurl . '/' . $controller .
-                        '/file_info/' . $dir . '/' . $filename);
+                    header('Location: ' . $baseurl . '/' . $controller . '/file_info/' . $dir . '/' .
+                        $filename);
                     exit();
                 }
                 else
@@ -100,19 +107,17 @@ switch ($action)
             '/file_browser/page/1/' . dirname($dir) . '">' .
             '<i class="fa fa-folder-open"></i> File browser</a></li>' .
             '<li class="active">Upload</li></ol>';
-        echo '<form role="form" action="' . $baseurl . '/' . $controller .
-            '/upload/' . $dir . '" method="post" enctype="multipart/form-data">';
+        echo '<form role="form" action="' . $baseurl . '/' . $controller . '/upload/' .
+            $dir . '" method="post" enctype="multipart/form-data">';
         if ($errors)
             echo Func::displayError($errors);
         echo '<div class="form-group"><label>File</label>' .
-            '<input type="file" name="berkas"/>' .
-            '<p class="help-block">Maksimal ukuran ' . $set['filesize'] .
-            ' kb</p></div>';
-        echo '<p><button class="btn btn-primary btn-sm" type="submit" name="' .
-            $key . '">Upload</button>' .
-            '&nbsp;<a class="btn btn-default btn-sm" data-dismiss="modal" href="' .
-            $baseurl . '/' . $controller . '/file_browser/page/1/' . $dir .
-            '">Batal</a></p>';
+            '<input type="file" name="berkas"/>' . '<p class="help-block">Maksimal ukuran ' .
+            $set['filesize'] . ' kb</p></div>';
+        echo '<p><button class="btn btn-primary btn-sm" type="submit" name="' . $key .
+            '">Upload</button>' .
+            '&nbsp;<a class="btn btn-default btn-sm" data-dismiss="modal" href="' . $baseurl .
+            '/' . $controller . '/file_browser/page/1/' . $dir . '">Batal</a></p>';
         echo '</form>';
         break;
 
@@ -121,8 +126,7 @@ switch ($action)
         $dir = mb_substr($dir, -1) == '/' ? mb_substr($dir, 0, -1) : $dir;
         if ((!is_file($site_root . '/' . $dir) || ($dir == '')))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1');
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
             exit();
         }
         $name = basename($dir);
@@ -139,29 +143,25 @@ switch ($action)
             $type = $types[$ext];
         else
             $type = "application/octet-stream";
-        echo '<dl class="dl-horizontal">' . '<dt>Nama</dt><dd>' . $name .
-            '</dd>' . '<dt>Tipe</dt><dd>' . $type . '</dd>' .
-            '<dt>Ukuran</dt><dd>' . round(filesize($site_root . '/' . $dir) /
-            1024, 2) . ' kb</dd>' . '<dt>Diupload</dt>' . '<dd>' . Func::displayDate(filemtime
-            ($site_root . '/' . $dir)) . '</dd>' .
+        echo '<dl class="dl-horizontal">' . '<dt>Nama</dt><dd>' . $name . '</dd>' .
+            '<dt>Tipe</dt><dd>' . $type . '</dd>' . '<dt>Ukuran</dt><dd>' . round(filesize($site_root .
+            '/' . $dir) / 1024, 2) . ' kb</dd>' . '<dt>Diupload</dt>' . '<dd>' . Func::
+            displayDate(filemtime($site_root . '/' . $dir)) . '</dd>' .
             '<dt>URL</dt><dd><a href="http://' . $site['url'] . '/site/' . $dir .
             '">http://' . $site['url'] . '/' . $dir . '</a></dd></dl>';
         echo '<div class="list-group">';
         echo '<a class="list-group-item" href="' . $baseurl . '/' . $controller .
-            '/rename/' . $dir . '">' .
-            '<i class="fa fa-pencil"></i> Ubah nama</a>';
+            '/rename/' . $dir . '">' . '<i class="fa fa-pencil"></i> Ubah nama</a>';
         echo '<a class="list-group-item" href="' . $baseurl . '/' . $controller .
             '/file_browser/page/1/?move=' . $dir . '">' .
             '<i class="fa fa-exchange"></i> Pindah</a>';
         echo '<a class="list-group-item" href="' . $baseurl . '/' . $controller .
             '/delete/' . $dir . '">' . '<i class="fa fa-times"></i> Hapus</a>';
         echo '<a class="list-group-item" href="' . $baseurl . '/' . $controller .
-            '/download/' . $dir . '">' .
-            '<i class="fa fa-download"></i> Download</a>';
+            '/download/' . $dir . '">' . '<i class="fa fa-download"></i> Download</a>';
         if (in_array($ext, $ext_text))
             echo '<a class="list-group-item" href="' . $baseurl . '/' . $controller .
-                '/edit_file/' . $dir . '">' .
-                '<i class="fa fa-edit"></i> Edit</a>';
+                '/edit_file/' . $dir . '">' . '<i class="fa fa-edit"></i> Edit</a>';
         echo '</div>';
         break;
 
@@ -170,15 +170,14 @@ switch ($action)
         $dir = mb_substr($dir, -1) == '/' ? mb_substr($dir, 0, -1) : $dir;
         if ((!is_file($site_root . '/' . $dir) || ($dir == '')))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1');
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
             exit();
         }
         $ext = Func::getExt($dir);
         if (!in_array($ext, $ext_text))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1/' . dirname($dir));
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1/' .
+                dirname($dir));
             exit();
         }
         $name = basename($dir);
@@ -187,8 +186,7 @@ switch ($action)
         if (isset($_POST['code']))
         {
             if (file_put_contents($site_root . '/' . $dir, $code))
-                $result =
-                    '<div class="alert alert-success">File berhasil disimpan.</div>';
+                $result = '<div class="alert alert-success">File berhasil disimpan.</div>';
             else
                 $result = Func::displayError('File gagal disimpan!');
         }
@@ -199,15 +197,15 @@ switch ($action)
             '/file_browser/page/1/' . dirname($dir) . '">' .
             '<i class="fa fa-folder-open"></i> File browser</a></li>' .
             '<li class="active">' . $name . '</li></ol>';
-        echo '<form role="form" action="' . $baseurl . '/' . $controller .
-            '/edit_file/' . $dir . '" method="post">';
+        echo '<form role="form" action="' . $baseurl . '/' . $controller . '/edit_file/' .
+            $dir . '" method="post">';
         if (isset($result))
             echo $result;
         echo '<div class="form-group"><label class="pull-right"><a class="func" href="//' .
             $site['url'] . '/' . $dir .
             '" target="_new"><i class="fa fa-eye"></i> Preview</a></label><label>Kode</label>' .
-            '<textarea class="form-control" name="code" rows="10">' .
-            htmlentities($code) . '</textarea>' . '</div>';
+            '<textarea class="form-control" name="code" rows="10">' . htmlentities($code) .
+            '</textarea>' . '</div>';
         echo '<p><button class="btn btn-primary btn-sm" type="submit">Simpan</button></p>';
         echo '</form>';
         break;
@@ -217,8 +215,7 @@ switch ($action)
         $dir = mb_substr($dir, -1) == '/' ? mb_substr($dir, 0, -1) : $dir;
         if ((!is_file($site_root . '/' . $dir) || ($dir == '')))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1');
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
             exit();
         }
         $name = basename($dir);
@@ -244,11 +241,10 @@ switch ($action)
     case 'delete':
         $dir = get_dir(4);
         $dir = mb_substr($dir, -1) == '/' ? mb_substr($dir, 0, -1) : $dir;
-        if ((!is_dir($site_root . '/' . $dir) && !is_file($site_root . '/' . $dir) ||
-            ($dir == '')))
+        if ((!is_dir($site_root . '/' . $dir) && !is_file($site_root . '/' . $dir) || ($dir ==
+            '')))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1');
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
             exit();
         }
         $name = basename($dir);
@@ -267,8 +263,8 @@ switch ($action)
             {
                 @Func::deleteDir($site_root . '/' . $dir);
             }
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1/' . dirname($dir));
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1/' .
+                dirname($dir));
             exit();
         }
         $pageTitle = 'Creator / Hapus';
@@ -278,14 +274,13 @@ switch ($action)
             '/file_browser/page/1/' . dirname($dir) . '">' .
             '<i class="fa fa-folder-open"></i> File browser</a></li>' .
             '<li class="active">' . $name . '</li></ol>';
-        echo '<form role="form" action="' . $baseurl . '/' . $controller .
-            '/delete/' . $dir . '" method="post">';
-        echo '<div class="alert alert-warning">Apakah Kamu yakin akan menghapus ' .
-            $typ . ' ini ?</div>';
+        echo '<form role="form" action="' . $baseurl . '/' . $controller . '/delete/' .
+            $dir . '" method="post">';
+        echo '<div class="alert alert-warning">Apakah Kamu yakin akan menghapus ' . $typ .
+            ' ini ?</div>';
         echo '<p><button class="btn btn-danger btn-sm" type="submit" name="submit">Hapus</button>' .
-            '&nbsp;<a class="btn btn-default btn-sm" data-dismiss="modal" href="' .
-            $baseurl . '/' . $controller . '/file_browser/page/1/' . dirname($dir) .
-            '">Batal</a></p>';
+            '&nbsp;<a class="btn btn-default btn-sm" data-dismiss="modal" href="' . $baseurl .
+            '/' . $controller . '/file_browser/page/1/' . dirname($dir) . '">Batal</a></p>';
         echo '</form>';
         break;
 
@@ -297,25 +292,22 @@ switch ($action)
         if (!is_dir($site_root . '/' . $dir) || !isset($r2['move']) || (@$r2['move'] ==
             ''))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1');
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
             exit();
         }
         $move = get_dir(4, '/AChuNk/JealousMan/' . strip_tags(trim($r2['move'])));
         if (!is_dir($site_root . '/' . $move) && !is_file($site_root . '/' . $move))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1/' . $dir);
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1/' . $dir);
             exit();
         }
         $name = basename($move);
         if (isset($_POST['submit']))
         {
-            if (rename($site_root . '/' . $move, $site_root . '/' . $dir . '/' .
-                $name))
+            if (rename($site_root . '/' . $move, $site_root . '/' . $dir . '/' . $name))
             {
-                header("Location: " . $baseurl . "/" . $controller .
-                    "/file_browser/page/1/" . $dir . "/" . $name);
+                header("Location: " . $baseurl . "/" . $controller . "/file_browser/page/1/" . $dir .
+                    "/" . $name);
                 exit();
             }
             else
@@ -332,14 +324,13 @@ switch ($action)
             '<i class="fa fa-folder-open"></i> File browser</a></li>' .
             '<li class="active">' . $name . '</li></ol>';
         echo '<div class="form"><form role="form" action="' . $baseurl . '/' . $controller .
-            '/move/' . $dir . '?move=' . $move . '" method="post">' . (isset($error) ?
-            $error : '') .
-            '<div class="alert alert-warning">Apa kamu yakin akan memindahkan <strong class="text-red">' .
-            htmlentities($name) .
-            '</strong> ke folder <strong class="text-red">/' . htmlentities($dir) .
+            '/move/' . $dir . '?move=' . $move . '" method="post">' . (isset($error) ? $error :
+            '') . '<div class="alert alert-warning">Apa kamu yakin akan memindahkan <strong class="text-red">' .
+            htmlentities($name) . '</strong> ke folder <strong class="text-red">/' .
+            htmlentities($dir) .
             '</strong> ?</div><p><button class="btn btn-primary btn-sm" type="submit" name="submit">Ya pindahkan</button>' .
-            '&nbsp;<a class="btn btn-default btn-sm" href="' . $baseurl . '/' .
-            $controller . '/file_browser/page/1/' . $dir .
+            '&nbsp;<a class="btn btn-default btn-sm" href="' . $baseurl . '/' . $controller .
+            '/file_browser/page/1/' . $dir .
             '" data-dismiss="modal">Batal</a></p></form></div>';
         break;
 
@@ -347,11 +338,10 @@ switch ($action)
         $error = false;
         $dir = get_dir(4);
         $dir = mb_substr($dir, -1) == '/' ? mb_substr($dir, 0, -1) : $dir;
-        if ((!is_dir($site_root . '/' . $dir) && !is_file($site_root . '/' . $dir) ||
-            ($dir == '')))
+        if ((!is_dir($site_root . '/' . $dir) && !is_file($site_root . '/' . $dir) || ($dir ==
+            '')))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1');
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
             exit();
         }
         $name = basename($dir);
@@ -365,8 +355,8 @@ switch ($action)
 
         if (isset($_POST['value']))
         {
-            if (!filter_var($value, FILTER_VALIDATE_REGEXP, array('options' =>
-                    array('regexp' => '/^[a-zA-Z0-9\_\-\.]+$/'))))
+            if (!filter_var($value, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' =>
+                        '/^[a-zA-Z0-9\_\-\.]+$/'))))
                 $error = 'Nama file salah';
             if (!$error)
             {
@@ -378,11 +368,9 @@ switch ($action)
                 {
                     $error = 'Folder sudah ada';
                 }
-                elseif (rename($site_root . '/' . $dir, $site_root . '/' . $prev_dir .
-                    '/' . $value))
+                elseif (rename($site_root . '/' . $dir, $site_root . '/' . $prev_dir . '/' . $value))
                 {
-                    header('Location: ' . $baseurl . '/' . $controller .
-                        '/file_browser/page/1/' . $prev_dir);
+                    header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1/' . $prev_dir);
                     exit();
                 }
                 else
@@ -416,20 +404,18 @@ switch ($action)
                 htmlentities($value) . '"/></div>';
         }
         echo '<p><button class="btn btn-primary btn-sm" type="submit">Simpan</button>' .
-            '&nbsp;<a class="btn btn-default btn-sm" data-dismiss="modal" href="' .
-            $baseurl . '/' . $controller . '/file_browser/page/1/' . $prev_dir .
-            '">Batal</a></p>';
+            '&nbsp;<a class="btn btn-default btn-sm" data-dismiss="modal" href="' . $baseurl .
+            '/' . $controller . '/file_browser/page/1/' . $prev_dir . '">Batal</a></p>';
         echo '</form></div>';
         break;
 
     case 'actions':
         $dir = get_dir(4);
         $dir = mb_substr($dir, -1) == '/' ? mb_substr($dir, 0, -1) : $dir;
-        if ((!is_dir($site_root . '/' . $dir) && !is_file($site_root . '/' . $dir) ||
-            ($dir == '')))
+        if ((!is_dir($site_root . '/' . $dir) && !is_file($site_root . '/' . $dir) || ($dir ==
+            '')))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1');
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
             exit();
         }
         $name = basename($dir);
@@ -452,8 +438,7 @@ switch ($action)
             '<li class="active">' . $name . '</li></ol>';
         echo '<div class="list-group">';
         echo '<a class="list-group-item" href="' . $baseurl . '/' . $controller .
-            '/rename/' . $dir . '">' .
-            '<i class="fa fa-pencil"></i> Ubah nama</a>';
+            '/rename/' . $dir . '">' . '<i class="fa fa-pencil"></i> Ubah nama</a>';
         echo '<a class="list-group-item" href="' . $baseurl . '/' . $controller .
             '/file_browser/page/1/?move=' . $dir . '">' .
             '<i class="fa fa-exchange"></i> Pindah</a>';
@@ -462,13 +447,11 @@ switch ($action)
         if ($typ == 'file')
         {
             echo '<a class="list-group-item" href="' . $baseurl . '/' . $controller .
-                '/download/' . $dir . '">' .
-                '<i class="fa fa-download"></i> Download</a>';
+                '/download/' . $dir . '">' . '<i class="fa fa-download"></i> Download</a>';
             $ext = Func::getExt($dir);
             if (in_array($ext, $ext_text))
                 echo '<a class="list-group-item" href="' . $baseurl . '/' . $controller .
-                    '/edit_file/' . $dir . '">' .
-                    '<i class="fa fa-edit"></i> Edit</a>';
+                    '/edit_file/' . $dir . '">' . '<i class="fa fa-edit"></i> Edit</a>';
         }
         echo '</div>';
         break;
@@ -478,8 +461,7 @@ switch ($action)
         $dir = mb_substr($dir, -1) == '/' ? mb_substr($dir, 0, -1) : $dir;
         if (!is_dir($site_root . '/' . $dir))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1');
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
             exit();
         }
         $errors = array();
@@ -488,8 +470,8 @@ switch ($action)
         {
             if (mb_strlen($value) < 2 || mb_strlen($value) > 30)
                 $errors[] = 'Panjang minimal 2 dan maksimal 30 karakter';
-            if (!filter_var($value, FILTER_VALIDATE_REGEXP, array('options' =>
-                    array('regexp' => '/^[a-zA-Z0-9\_\-\.]+$/'))))
+            if (!filter_var($value, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' =>
+                        '/^[a-zA-Z0-9\_\-\.]+$/'))))
                 $errors[] = 'Nama file salah';
             if (file_exists($site_root . '/' . $dir . '/' . $value) || is_dir($site_root .
                 '/' . $dir . '/' . $value))
@@ -498,8 +480,7 @@ switch ($action)
             {
                 if (file_put_contents($site_root . '/' . $dir . '/' . $value, "\n") != false)
                 {
-                    header('Location: ' . $baseurl . '/' . $controller .
-                        '/file_browser/page/1/' . $dir);
+                    header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1/' . $dir);
                     exit();
                 }
                 else
@@ -524,9 +505,8 @@ switch ($action)
             htmlentities($value) . '"/>' .
             '<p class="help-block">Karakter yang diijinkan a-z, 0-9 dan simbol _</p></div>';
         echo '<p><button class="btn btn-primary btn-sm" type="submit">Buat</button>' .
-            '&nbsp;<a class="btn btn-default btn-sm" data-dismiss="modal" href="' .
-            $baseurl . '/' . $controller . '/file_browser/page/1/' . $dir .
-            '">Batal</a></p>';
+            '&nbsp;<a class="btn btn-default btn-sm" data-dismiss="modal" href="' . $baseurl .
+            '/' . $controller . '/file_browser/page/1/' . $dir . '">Batal</a></p>';
         echo '</form></div>';
         break;
 
@@ -544,8 +524,8 @@ switch ($action)
         {
             if (mb_strlen($value) < 2 || mb_strlen($value) > 30)
                 $errors[] = 'Panjang minimal 2 dan maksimal 30 karakter';
-            if (!filter_var($value, FILTER_VALIDATE_REGEXP, array('options' =>
-                    array('regexp' => '/^[a-zA-Z0-9\_\-\.]+$/'))))
+            if (!filter_var($value, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' =>
+                        '/^[a-zA-Z0-9\_\-\.]+$/'))))
                 $errors[] = 'Nama folder salah';
             if (is_dir($site_root . '/' . $dir . '/' . $value) || file_exists($site_root .
                 '/' . $dir . '/' . $value))
@@ -554,8 +534,8 @@ switch ($action)
             {
                 if (mkdir($site_root . '/' . $dir . '/' . $value, 0777))
                 {
-                    header('Location: ' . $baseurl . '/' . $controller .
-                        '/file_browser/page/1/' . $dir . '/' . $value);
+                    header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1/' . $dir .
+                        '/' . $value);
                     exit();
                 }
                 else
@@ -580,9 +560,8 @@ switch ($action)
             htmlentities($value) . '"/>' .
             '<p class="help-block">Karakter yang diijinkan a-z, A-Z, 0-9, . (titik) dan simbol _</p></div>';
         echo '<p><button class="btn btn-primary btn-sm" type="submit">Buat</button>' .
-            '&nbsp;<a class="btn btn-default btn-sm" data-dismiss="modal" href="' .
-            $baseurl . '/' . $controller . '/file_browser/page/1/' . $dir .
-            '">Batal</a></p>';
+            '&nbsp;<a class="btn btn-default btn-sm" data-dismiss="modal" href="' . $baseurl .
+            '/' . $controller . '/file_browser/page/1/' . $dir . '">Batal</a></p>';
         echo '</form></div>';
         break;
 
@@ -590,8 +569,7 @@ switch ($action)
         $pageTitle = 'Creator / File Browser';
         if (!isset($_GET['page']))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1');
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
             exit();
         }
         parse_str($_SERVER['QUERY_STRING'], $r2);
@@ -607,8 +585,7 @@ switch ($action)
         $site_dir = $site_root . ($dir == '' ? '' : '/' . $dir);
         if (!is_dir($site_dir))
         {
-            header('Location: ' . $baseurl . '/' . $controller .
-                '/file_browser/page/1');
+            header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
             exit();
         }
         echo '<h3 class="head-title">File Manager</h3>';
@@ -629,9 +606,8 @@ switch ($action)
             $dirs = preg_split("/\/+/", $dir);
             $total_drx = count($dirs);
             echo '<ol class="breadcrumb">';
-            echo '<li><a href="' . $baseurl . '/' . $controller .
-                '/file_browser/page/1/' . $move . '">' .
-                '<i class="fa fa-folder-open"></i> File browser</a></li>';
+            echo '<li><a href="' . $baseurl . '/' . $controller . '/file_browser/page/1/' .
+                $move . '">' . '<i class="fa fa-folder-open"></i> File browser</a></li>';
             for ($x = 0; $x < $total_drx; $x++)
             {
                 if ($x == ($total_drx - 1))
@@ -640,9 +616,8 @@ switch ($action)
                 }
                 else
                 {
-                    echo '<li><a href="' . $baseurl . '/' . $controller .
-                        '/file_browser/page/1/' . $xdir . $dirs[$x] . $move .
-                        '">' . $dirs[$x] . '</a></li>';
+                    echo '<li><a href="' . $baseurl . '/' . $controller . '/file_browser/page/1/' .
+                        $xdir . $dirs[$x] . $move . '">' . $dirs[$x] . '</a></li>';
                 }
                 $xdir .= $dirs[$x] . '/';
             }
@@ -651,11 +626,11 @@ switch ($action)
         }
         if ($move != '')
         {
-            echo '<div class="alert alert-info"><a class="alert-link" href="' .
-                $baseurl . '/' . $controller . '/move/' . $dir . $move .
+            echo '<div class="alert alert-info"><a class="alert-link" href="' . $baseurl .
+                '/' . $controller . '/move/' . $dir . $move .
                 '">Pindahkan <span class="text-red">' . htmlentities(basename($r2['move'])) .
-                '</span> ke sini</a>, atau <a class="alert-link" href="' . $baseurl .
-                '/' . $controller . '/file_browser/page/' . $page . '/' . $dir .
+                '</span> ke sini</a>, atau <a class="alert-link" href="' . $baseurl . '/' . $controller .
+                '/file_browser/page/' . $page . '/' . $dir .
                 '">batalkan</a> tindakan ini!</div>';
         }
         $files = Func::readDir($site_dir);
@@ -677,28 +652,24 @@ switch ($action)
                 echo '<li class="list-group-item">';
                 if (is_file($site_dir . '/' . $files[$e]))
                 {
-                    echo '<a href="' . $baseurl . '/' . $controller .
-                        '/file_info/' . ($dir == '' ? '' : $dir . '/') . $files[$e] .
-                        $move . '"><i class="fa fa-file"></i> ' . $files[$e] .
+                    echo '<a href="' . $baseurl . '/' . $controller . '/file_info/' . ($dir == '' ?
+                        '' : $dir . '/') . $files[$e] . $move . '"><i class="fa fa-file"></i> ' . $files[$e] .
                         '</a>';
                 }
                 else
                 {
-                    echo '<a href="' . $baseurl . '/' . $controller .
-                        '/file_browser/page/' . $page . '/' . ($dir == '' ? '' :
-                        $dir . '/') . $files[$e] . $move .
+                    echo '<a href="' . $baseurl . '/' . $controller . '/file_browser/page/' . $page .
+                        '/' . ($dir == '' ? '' : $dir . '/') . $files[$e] . $move .
                         '"><i class="fa fa-folder"></i> ' . $files[$e] . '</a>';
                 }
-                echo '<a class="pull-right" href="' . $baseurl . '/' . $controller .
-                    '/actions/' . ($dir == '' ? '' : $dir . '/') . $files[$e] .
-                    '"> <i class="fa fa-cog"></i> </a>';
+                echo '<a class="pull-right" href="' . $baseurl . '/' . $controller . '/actions/' . ($dir ==
+                    '' ? '' : $dir . '/') . $files[$e] . '"> <i class="fa fa-cog"></i> </a>';
                 echo '</li>';
             }
             echo '</ul>';
             if ($total > $kmess)
-                echo Func::displayPagination($baseurl . '/' . $controller .
-                    '/file_browser/', $start, $total, $kmess, 'page/%d/' . strtr
-                    ($dir, array('%' => '%%')) . $move);
+                echo Func::displayPagination($baseurl . '/' . $controller . '/file_browser/', $start,
+                    $total, $kmess, 'page/%d/' . strtr($dir, array('%' => '%%')) . $move);
         }
         else
         {
@@ -707,8 +678,7 @@ switch ($action)
         break;
 
     case 'index':
-        header('Location: ' . $baseurl . '/' . $controller .
-            '/file_browser/page/1');
+        header('Location: ' . $baseurl . '/' . $controller . '/file_browser/page/1');
         exit();
         break;
 

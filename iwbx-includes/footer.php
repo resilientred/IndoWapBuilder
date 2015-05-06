@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @package IndoWapBuilder
+ * @version VERSION (see attached file)
+ * @author Achunk JealousMan
+ * @link http://facebook.com/achunks
+ * @copyright 2011 - 2015
+ * @license LICENSE (see attached file)
+ */
+
 echo '</div><div id="footer"><div class="nav-footer"><a href="' . $baseurl .
     '/"><i class="fa fa-home"></i> Home</a>';
 if ($user->id)

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @package IndoWapBuilder
+ * @version VERSION (see attached file)
+ * @author Achunk JealousMan
+ * @link http://facebook.com/achunks
+ * @copyright 2011 - 2015
+ * @license LICENSE (see attached file)
+ */
+
 session_start();
 
 function install_indowapbuilder($pdo, $file = false)
@@ -22,8 +31,8 @@ function install_indowapbuilder($pdo, $file = false)
         {
             $in_string = false;
         }
-        elseif (!$in_string && ($query[$i] == '"' || $query[$i] == "'") && (!
-            isset($buffer[0]) || $buffer[0] != "\\"))
+        elseif (!$in_string && ($query[$i] == '"' || $query[$i] == "'") && (!isset($buffer[0]) ||
+            $buffer[0] != "\\"))
         {
             $in_string = $query[$i];
         }
@@ -52,13 +61,14 @@ $data = isset($_POST['data']) ? $_POST['data'] : array();
 $err_conn = false;
 $conn = false;
 
-if (isset($db['host']) && isset($db['user']) && isset($db['password']) && isset($db['database']))
+if (isset($db['host']) && isset($db['user']) && isset($db['password']) && isset
+    ($db['database']))
 {
     $dsn = 'mysql:dbname=' . $db['database'] . ';host=' . $db['host'];
     try
     {
-        $pdo = new PDO($dsn, $db["user"], $db["password"], array
-            (PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        $pdo = new PDO($dsn, $db["user"], $db["password"], array(PDO::
+                MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         $conn = true;
@@ -106,53 +116,86 @@ if (isset($db['host']) && isset($db['user']) && isset($db['password']) && isset(
 					Installasi IndoWapBuilder
 				</h3>
 				<div class="form">
-                <?php if (isset($_POST['submit2'])):?>
-                    <?php if($conn):?>
+                <?php
+
+if (isset($_POST['submit2'])):
+
+?>
                     <?php
-                        install_indowapbuilder($pdo,'indowapbuilder.sql');
-                        $q = $pdo->prepare("UPDATE `set` SET `val` = ? WHERE `key` = ?");
-                        $q->execute(array($data['siteurl'], 'siteurl'));
-                        
-                        $password_hash = md5(md5($data['admpass']));
-                        
-                        $user = $pdo->prepare("INSERT INTO `user` SET `name` = ?, `email` = ?, `password` = ?, `rights` = ?, `regtime` = ?");
-                        $user->execute(array(
-                            $data['admname'],
-                            $data['admemail'],
-                            $password_hash,
-                            '10',
-                            time(),
-                            ));
-                            
-                        $uid = $pdo->lastInsertId();
-                        $_SESSION['uid'] = $uid;
-                        $_SESSION['upw'] = md5($data['admpass']);
-                        $dbconfig = "host = \"".addslashes($db['host'])."\"\r\n".
-                                    "database = \"".addslashes($db['database'])."\"\r\n".
-                                    "user = \"".addslashes($db['user'])."\"\r\n".
-                                    "password = \"".addslashes($db['password'])."\";";
-                        @file_put_contents('iwbx-includes/db.ini', $dbconfig);
-                    ?>
+
+    if ($conn):
+
+?>
+                    <?php
+
+        install_indowapbuilder($pdo, 'indowapbuilder.sql');
+        $q = $pdo->prepare("UPDATE `set` SET `val` = ? WHERE `key` = ?");
+        $q->execute(array($data['siteurl'], 'siteurl'));
+
+        $password_hash = md5(md5($data['admpass']));
+
+        $user = $pdo->prepare("INSERT INTO `user` SET `name` = ?, `email` = ?, `password` = ?, `rights` = ?, `regtime` = ?");
+        $user->execute(array(
+            $data['admname'],
+            $data['admemail'],
+            $password_hash,
+            '10',
+            time(),
+            ));
+
+        $uid = $pdo->lastInsertId();
+        $_SESSION['uid'] = $uid;
+        $_SESSION['upw'] = md5($data['admpass']);
+        $dbconfig = "host = \"" . addslashes($db['host']) . "\"\r\n" . "database = \"" .
+            addslashes($db['database']) . "\"\r\n" . "user = \"" . addslashes($db['user']) .
+            "\"\r\n" . "password = \"" . addslashes($db['password']) . "\";";
+        @file_put_contents('iwbx-includes/db.ini', $dbconfig);
+
+?>
                     <div class="alert alert-success">
                         Installasi berhasil diselesaikan. Silakan <a class="alert-link" href="index.php/admin">Admin Panel</a>
                     </div>
                     <div class="alert alert-danger">
                         Demi keamanan harap hapus file <strong>install.php</strong>
                     </div>
-                    <?php else:?>
+                    <?php
+
+    else:
+
+?>
                     <div class="alert alert-danger">Tidak dapat terhubung ke database</div>
-                    <div class="alert alert-info"><?php echo $err_conn;?></div>
+                    <div class="alert alert-info"><?php
+
+        echo $err_conn;
+
+?></div>
                     <p><a class="btn btn-default btn-sm" href="install.php?">Kembali</a></p>
-                    <?php endif?>
-                <?php elseif (isset($_POST['submit1'])):?>
-                    <?php if($conn):?>
+                    <?php
+
+    endif
+
+?>
+                <?php
+
+    elseif (isset($_POST['submit1'])):
+
+?>
+                    <?php
+
+        if ($conn):
+
+?>
                     <form method="post" action="install.php">
 						<div class="alert alert-info">
 							<div class="form-group">
 								<label>
 									URL Situs
 								</label>
-								<input class="form-control input-sm" type="text" name="data[siteurl]" value="http://<?php echo $_SERVER['SERVER_NAME'];?>"/>
+								<input class="form-control input-sm" type="text" name="data[siteurl]" value="http://<?php
+
+            echo $_SERVER['SERVER_NAME'];
+
+?>"/>
 								<p class="help-block">
 									URL Situs tanpa diakhiri garis miring
 								</p>
@@ -172,7 +215,11 @@ if (isset($db['host']) && isset($db['user']) && isset($db['password']) && isset(
 								<label>
 									Email Admin
 								</label>
-								<input class="form-control input-sm" type="text" name="data[admemail]" value="admin@<?php echo $_SERVER['SERVER_NAME'];?>"/>
+								<input class="form-control input-sm" type="text" name="data[admemail]" value="admin@<?php
+
+            echo $_SERVER['SERVER_NAME'];
+
+?>"/>
 							</div>
 							<div class="form-group">
 								<label>
@@ -186,17 +233,49 @@ if (isset($db['host']) && isset($db['user']) && isset($db['password']) && isset(
 								Install
 							</button>
 						</p>
-                        <input type="hidden" name="db[host]" value="<?php echo htmlentities($db['host']);?>"/>
-                        <input type="hidden" name="db[user]" value="<?php echo htmlentities($db['user']);?>"/>
-                        <input type="hidden" name="db[password]" value="<?php echo htmlentities($db['password']);?>"/>
-                        <input type="hidden" name="db[database]" value="<?php echo htmlentities($db['database']);?>"/>
+                        <input type="hidden" name="db[host]" value="<?php
+
+            echo htmlentities($db['host']);
+
+?>"/>
+                        <input type="hidden" name="db[user]" value="<?php
+
+            echo htmlentities($db['user']);
+
+?>"/>
+                        <input type="hidden" name="db[password]" value="<?php
+
+            echo htmlentities($db['password']);
+
+?>"/>
+                        <input type="hidden" name="db[database]" value="<?php
+
+            echo htmlentities($db['database']);
+
+?>"/>
 					</form>
-                    <?php else:?>
+                    <?php
+
+        else:
+
+?>
                     <div class="alert alert-danger">Tidak dapat terhubung ke database</div>
-                    <div class="alert alert-info"><?php echo $err_conn;?></div>
+                    <div class="alert alert-info"><?php
+
+            echo $err_conn;
+
+?></div>
                     <p><a class="btn btn-default btn-sm" href="install.php?">Kembali</a></p>
-                    <?php endif?>
-                <?php else:?>
+                    <?php
+
+        endif
+
+?>
+                <?php
+
+        else:
+
+?>
                     <form method="post" action="install.php">
 						<div class="alert alert-warning">
 							<div class="form-group">
@@ -230,7 +309,11 @@ if (isset($db['host']) && isset($db['user']) && isset($db['password']) && isset(
 							</button>
 						</p>
 					</form>
-                    <?php endif?>
+                    <?php
+
+        endif
+
+?>
 				</div>
 			</div>
 			<div id="footer">

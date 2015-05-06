@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @package IndoWapBuilder
+ * @version VERSION (see attached file)
+ * @author Achunk JealousMan
+ * @link http://facebook.com/achunks
+ * @copyright 2011 - 2015
+ * @license LICENSE (see attached file)
+ */
+
 if (!$user->id)
     $user->redirect(urlencode($set['url'] . '/index.php/panel'));
 if ($user->data['rights'] != 10)
@@ -57,21 +66,19 @@ switch ($action)
         echo '<div class="form"><form method="post" action="' . $baseurl .
             '/admin/settings">';
         echo '<div class="alert alert-info"><div class="form-group"><label>URL Situs</label>' .
-            '<input class="form-control input-sm" type="text" name="siteurl" value="' .
-            $set['url'] .
+            '<input class="form-control input-sm" type="text" name="siteurl" value="' . $set['url'] .
             '"/><p class="help-block">URL Situs tanpa diakhiri garis miring</p></div>';
         echo '<div class="form-group"><label>Nama Situs</label>' .
             '<input class="form-control input-sm" type="text" name="sitename" value="' .
             htmlentities($set['sitename']) . '"/></div>';
         echo '<div class="form-group"><label>Email Situs</label>' .
-            '<input class="form-control input-sm" type="text" name="siteemail" value="' .
-            $set['siteemail'] . '"/></div>';
+            '<input class="form-control input-sm" type="text" name="siteemail" value="' . $set['siteemail'] .
+            '"/></div>';
         echo '<div class="form-group"><label>Zona Waktu</label>' .
-            '<input class="form-control input-sm" type="text" name="timezone" value="' .
-            $set['timezone'] . '"/><p class="help-block">-12 s/d +12</p></div>';
+            '<input class="form-control input-sm" type="text" name="timezone" value="' . $set['timezone'] .
+            '"/><p class="help-block">-12 s/d +12</p></div>';
         echo '<div class="form-group"><label>List Per Halaman</label>' .
-            '<input class="form-control input-sm" type="text" name="pageview" value="' .
-            $set['pageview'] .
+            '<input class="form-control input-sm" type="text" name="pageview" value="' . $set['pageview'] .
             '"/></div></div>';
 
         echo '<div class="alert alert-warning"><div class="form-group"><label>Domain Situs</label>' .
@@ -79,12 +86,10 @@ switch ($action)
             implode(',', unserialize($set['domains'])) .
             '"/><p class="help-block">Jika lebih dari satu pisahkan dengan tanda , (koma)</p></div>';
         echo '<div class="form-group"><label>Maks Situs</label>' .
-            '<input class="form-control input-sm" type="text" name="maxsites" value="' .
-            $set['maxsites'] .
+            '<input class="form-control input-sm" type="text" name="maxsites" value="' . $set['maxsites'] .
             '"/><p class="help-block">Maksimal jumlah situs per user</p></div>';
         echo '<div class="form-group"><label>Maks Upload</label>' .
-            '<input class="form-control input-sm" type="text" name="filesize" value="' .
-            $set['filesize'] .
+            '<input class="form-control input-sm" type="text" name="filesize" value="' . $set['filesize'] .
             '"/><p class="help-block">Besar file maksimal pada yang diupload, (dalam kb).</p></div></div>';
 
 
@@ -101,21 +106,18 @@ switch ($action)
         if (($ver = file_get_contents(Func::checkUpdateUrl())) != false)
         {
             if (version_compare(Func::getVersion(), $ver, '<'))
-                echo
-                    '<div class="alert alert-warning">Versi baru telah tersedia, yaitu <strong>IndoWapBuilder v' .
-                    $ver .
-                    '</strong><p>Untuk info lebih lanjut silakan hubungi ' .
+                echo '<div class="alert alert-warning">Versi baru telah tersedia, yaitu <strong>IndoWapBuilder v' .
+                    $ver . '</strong><p>Untuk info lebih lanjut silakan hubungi ' .
                     '<a class="alert-link" href="http://facebook.com/achunks">Achunk JealousMan</a></div>';
             else
-                echo
-                    '<div class="alert alert-success">Selamat, Kamu menggunakan IndoWapBuilder v.' .
+                echo '<div class="alert alert-success">Selamat, Kamu menggunakan IndoWapBuilder v.' .
                     Func::getVersion() . ', ini adalah versi terbaru.</div>';
         }
         else
         {
             echo '<div class="alert alert-danger">' .
-                'Tidak dapat memeriksa pembaruan, ini terjadi ketika memanggil URL ' .
-                Func::checkUpdateUrl() . '</div>';
+                'Tidak dapat memeriksa pembaruan, ini terjadi ketika memanggil URL ' . Func::
+                checkUpdateUrl() . '</div>';
         }
 
         break;
@@ -124,8 +126,8 @@ switch ($action)
         $pageTitle = 'Admin Panel';
         include_once (ROOTPATH . 'iwbx-includes/header.php');
         echo '<h3 class="head-title">Admin Panel</h3>';
-        echo '<div class="alert alert-info"><strong>IndoWapBuilder v.' . Base::getVersion() .
-            '</strong>, <a class="alert-link" href="' . $baseurl .
+        echo '<div class="alert alert-info"><strong>IndoWapBuilder v.' . Base::
+            getVersion() . '</strong>, <a class="alert-link" href="' . $baseurl .
             '/admin/check_update">' . 'Periksa pembaruan &raquo;</a></div>';
         echo Func::getNotice();
         echo '<div class="list-group"><a class="list-group-item" href="' . $baseurl .
@@ -139,4 +141,5 @@ switch ($action)
 
 }
 include_once (ROOTPATH . 'iwbx-includes/footer.php');
+
 ?>

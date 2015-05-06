@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @package IndoWapBuilder
+ * @version VERSION (see attached file)
+ * @author Achunk JealousMan
+ * @link http://facebook.com/achunks
+ * @copyright 2011 - 2015
+ * @license LICENSE (see attached file)
+ */
+
 if (!file_exists('iwbx-includes/db.ini'))
 {
     die('Silakan install terlebih dahulu!');
@@ -37,8 +46,8 @@ if (is_dir(ROOTPATH . 'iwbx-sites/' . $site_domain))
         readfile(ROOTPATH . 'iwbx-sites/' . $site_domain . '/' . $route);
         exit();
     }
-    if (!is_dir(ROOTPATH . 'iwbx-sites/' . $site_domain . '/' . $route) && !
-        is_file(ROOTPATH . 'iwbx-sites/' . $site_domain . '/' . $route))
+    if (!is_dir(ROOTPATH . 'iwbx-sites/' . $site_domain . '/' . $route) && !is_file
+        (ROOTPATH . 'iwbx-sites/' . $site_domain . '/' . $route))
     {
         $path = ROOTPATH . 'iwbx-sites/' . $site_domain;
         $index = '404.html';

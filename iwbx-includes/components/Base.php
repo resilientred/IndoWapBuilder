@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @package IndoWapBuilder
+ * @version VERSION (see attached file)
+ * @author Achunk JealousMan
+ * @link http://facebook.com/achunks
+ * @copyright 2011 - 2015
+ * @license LICENSE (see attached file)
+ */
+
 class Base
 {
     public static $pdo;
@@ -41,8 +50,8 @@ class Base
             '';
         try
         {
-            self::$pdo = new PDO($dsn, $dbSettings["user"], $dbSettings["password"],
-                array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            self::$pdo = new PDO($dsn, $dbSettings["user"], $dbSettings["password"], array(PDO::
+                    MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         }
@@ -86,8 +95,7 @@ class Base
                 if ($i % 2)
                 {
                     if (!isset($handle_requests[$r[$i]]))
-                        $handle_requests[$r[$i]] = isset($r[$i + 1]) ? $r[$i + 1] :
-                            '';
+                        $handle_requests[$r[$i]] = isset($r[$i + 1]) ? $r[$i + 1] : '';
                 }
                 if (isset($r[$i]) && $c == 1 && $r[$i] != '/' && !empty($r[$i]))
                     self::$controller = $r[$i];

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @package IndoWapBuilder
+ * @version VERSION (see attached file)
+ * @author Achunk JealousMan
+ * @link http://facebook.com/achunks
+ * @copyright 2011 - 2015
+ * @license LICENSE (see attached file)
+ */
+
 class module_test extends Module
 {
     protected $options = array();
@@ -19,8 +28,8 @@ class module_test extends Module
         echo '<h3 class="head-title">Modul::' . __class__ . '</h3>';
         echo '<div class="alert alert-warning">Ini adalah modul demo' . ($user->data['rights'] ==
             10 ? ', untuk menghapus modul ini s' .
-            'ilakan hapus file <strong>iwbx-includes/modules/' . __class__ .
-            '.php' : '.') . '</div>';
+            'ilakan hapus file <strong>iwbx-includes/modules/' . __class__ . '.php' : '.') .
+            '</div>';
     }
 }
 

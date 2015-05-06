@@ -1,13 +1,21 @@
 <?php
 
+/**
+ * @package IndoWapBuilder
+ * @version VERSION (see attached file)
+ * @author Achunk JealousMan
+ * @link http://facebook.com/achunks
+ * @copyright 2011 - 2015
+ * @license LICENSE (see attached file)
+ */
+
 class Func extends Base
 {
     public static function getNotice()
     {
         if (isset($_SESSION['notice']))
         {
-            $notice = '<div class="alert alert-info">' . $_SESSION['notice'] .
-                '</div>';
+            $notice = '<div class="alert alert-info">' . $_SESSION['notice'] . '</div>';
             unset($_SESSION['notice']);
         }
         else
@@ -145,8 +153,7 @@ class Func extends Base
         $ssid = rand(1111, 9999);
         $neighbors = 5;
         if ($start >= $total)
-            $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total %
-                $kmess)));
+            $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
         else
             $start = max(0, (int)$start - ((int)$start % (int)$kmess));
         $base_link = '<li><a href="' . strtr($url, array('%' => '%%')) . $page_str .
@@ -164,40 +171,36 @@ class Func extends Base
             if ($start >= $kmess * $nCont)
             {
                 $tmpStart = $start - $kmess * $nCont;
-                $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart /
-                    $kmess + 1);
+                $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart / $kmess + 1);
             }
-        $out[] = '<li class="active"><span>' . ($start / $kmess + 1) .
-            '</span></li>';
+        $out[] = '<li class="active"><span>' . ($start / $kmess + 1) . '</span></li>';
         $tmpMaxPages = (int)(($total - 1) / $kmess) * $kmess;
         for ($nCont = 1; $nCont <= $neighbors; $nCont++)
             if ($start + $kmess * $nCont <= $tmpMaxPages)
             {
                 $tmpStart = $start + $kmess * $nCont;
-                $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart /
-                    $kmess + 1);
+                $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart / $kmess + 1);
             }
         if ($start + $kmess * ($neighbors + 1) < $tmpMaxPages)
         {
             $out[] = '<li class="disable"><span>...</span></li>';
         }
         if ($start + $kmess * $neighbors < $tmpMaxPages)
-            $out[] = sprintf($base_link, $tmpMaxPages / $kmess + 1, $tmpMaxPages /
-                $kmess + 1);
+            $out[] = sprintf($base_link, $tmpMaxPages / $kmess + 1, $tmpMaxPages / $kmess +
+                1);
         if ($start + $kmess < $total)
         {
-            $display_page = ($start + $kmess) > $total ? $total : ($start / $kmess +
-                2);
-            $out[] = sprintf('<li><a href="' . strtr($url, array('%' => '%%')) .
-                $page_str . '">%s</a></li>', $display_page, '&raquo;');
+            $display_page = ($start + $kmess) > $total ? $total : ($start / $kmess + 2);
+            $out[] = sprintf('<li><a href="' . strtr($url, array('%' => '%%')) . $page_str .
+                '">%s</a></li>', $display_page, '&raquo;');
         }
         else
         {
             $out[] = '<li class="disabled"><span>&raquo;</span></li>';
         }
 
-        $html = '<div class="paging"><ul class="pagination pagination-sm">' .
-            implode('', $out) . '</ul></div>';
+        $html = '<div class="paging"><ul class="pagination pagination-sm">' . implode('',
+            $out) . '</ul></div>';
 
         return $html;
     }

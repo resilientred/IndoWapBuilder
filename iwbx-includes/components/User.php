@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @package IndoWapBuilder
+ * @version VERSION (see attached file)
+ * @author Achunk JealousMan
+ * @link http://facebook.com/achunks
+ * @copyright 2011 - 2015
+ * @license LICENSE (see attached file)
+ */
+
 class User extends Base
 {
     public $logIn = false;
@@ -39,8 +48,7 @@ class User extends Base
 
     public function redirect($redir = '')
     {
-        header('Location: ' . parent::$set['baseurl'] . '/site/login?redirect=' .
-            $redir);
+        header('Location: ' . parent::$set['baseurl'] . '/site/login?redirect=' . $redir);
         exit();
     }
 
