@@ -5,7 +5,7 @@
  * @version VERSION (see attached file)
  * @author Achunk JealousMan
  * @link http://facebook.com/achunks
- * @copyright 2011 - 2015
+ * @copyright 2014 - 2015
  * @license LICENSE (see attached file)
  */
 
